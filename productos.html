@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogar Smart - Productos</title>
+
+    <!-- Meta Tags / SEO -->
+    <meta name="description" content="Explora nuestro catálogo de productos inteligentes: lámparas, sensores, seguridad y climatización. Calidad premium para tu hogar.">
+    <meta name="keywords" content="productos smart, lámparas wifi, sensores seguridad, cámaras 4K, domótica">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Hogar Smart - Catálogo de Productos">
+    <meta property="og:description" content="Equipa tu hogar con lo mejor en tecnología inteligente.">
+    <meta property="og:image" content="https://i.imgur.com/Ox8Vqqb.jpeg">
+
+    <link rel="icon" type="image/png" href="https://i.imgur.com/Ox8Vqqb.jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+        }
+
+        /* Header / Nav (same as Inicio.html) */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.2rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        header.scrolled .logo {
+            color: #2d3748;
+        }
+
+        .logo i {
+            margin-right: 12px;
+            font-size: 1.8rem;
+            color: white;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        header.scrolled .logo i {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        header.scrolled .nav-links a {
+            color: #4a5568;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: #ff6b6b;
+        }
+
+        /* Mobile Nav Toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        header.scrolled .nav-toggle span {
+            background: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s ease;
+                z-index: 1000;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Page Title Header */
+        .page-header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 20px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header img {
+            max-width: 100px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #334155;
+            color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            padding: 16px;
+            position: fixed;
+            z-index: 5000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        #toast.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @-webkit-keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @-webkit-keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300"><rect fill="%23e8f5e8" width="1000" height="300"/><circle fill="%23667eea" cx="150" cy="80" r="30"/><circle fill="%23ff6b6b" cx="400" cy="120" r="25"/><circle fill="%23764ba2" cx="700" cy="90" r="35"/><circle fill="%234fd1c7" cx="900" cy="200" r="20"/></svg>');
+            background-size: cover;
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-add-cart {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            margin-left: 10px;
+            width: 45px;
+            height: 45px;
+        }
+
+        .btn-add-cart:hover {
+            background: #764ba2;
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .button-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .promo-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .promo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #edf2f7;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .promo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .promo-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            z-index: 2;
+        }
+
+        .promo-card h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            color: #2d3748;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .old-price {
+            font-size: 1.1rem;
+            color: #a0aec0;
+            text-decoration: line-through;
+            margin-left: 10px;
+            font-weight: 400;
+        }
+
+        .promo-card p {
+            color: #718096;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #a0aec0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #edf2f7;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .btn-confirm {
+            width: 100%;
+            background: #25d366;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Sidebar Styles */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 2500;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 380px;
+            height: 100vh;
+            background: #ffffff;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 3000;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .cart-items-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .cart-item-info h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-info p {
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .cart-item-remove {
+            color: #ef4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 20px;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-checkout:hover {
+            transform: scale(1.02);
+        }
+
+        /* Category Filters */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 80px;
+            z-index: 900;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #667eea;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .promo-card {
+            display: block; /* Default display */
+        }
+
+        .promo-card.hidden {
+            display: none;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #128c7e;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Support Float Button */
+        .support-float {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 110px;
+            right: 45px;
+            background-color: #667eea;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .support-float:hover {
+            transform: scale(1.1);
+            background-color: #764ba2;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Support Modal */
+        .support-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+            backdrop-filter: blur(5px);
+        }
+
+        .support-modal.active {
+            display: flex;
+        }
+
+        .support-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            animation: modalSlide 0.4s ease;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .support-modal h2 {
+            margin-bottom: 20px;
+            color: #2d3748;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .support-form-group {
+            margin-bottom: 15px;
+        }
+
+        .support-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .support-form-group input, 
+        .support-form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #edf2f7;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .btn-send-support {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-send-support:hover {
+            background: #764ba2;
+        }
+
+        .close-support {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #a0aec0;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 15px 50px 15px 25px;
+            border: 2px solid #edf2f7;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .search-container i {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                Hogar Smart
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="Inicio.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="sobre nosotros.html">Sobre Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li class="cart-icon" style="list-style: none;"><a href="#" id="cart-btn" style="position:relative;"><i
+                            class="fas fa-shopping-cart"></i> <span id="cart-count" style="position: absolute; top: -10px; right: -10px; background: #ff6b6b; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Title Header -->
+    <section class="page-header reveal">
+        <img src="https://i.imgur.com/Ox8Vqqb.jpeg" alt="Hogar Smart Logo" loading="lazy">
+        <h1>💡 Hogar Smart</h1>
+        <p>Tecnología Inteligente para tu Hogar Moderno</p>
+    </section>
+
+    <!-- Product Grid -->
+    <div class="promo-container" id="promociones">
+        <h2 style="text-align: center; color: #2d3748; margin-bottom: 20px; font-size: 2.5rem;">Nuestros Productos</h2>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="product-search" placeholder="Busca tu producto (ej: cámara, lámpara...)">
+            <i class="fas fa-search"></i>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="iluminacion">Iluminación</button>
+            <button class="filter-btn" data-filter="seguridad">Seguridad</button>
+            <button class="filter-btn" data-filter="sensores">Sensores</button>
+            <button class="filter-btn" data-filter="clima">Climatización</button>
+        </div>
+
+        <div class="promo-grid">
+            <!-- === LÁMPARAS === -->
+            <div class="promo-card reveal" data-category="iluminacion">
+                <img src="https://m.media-amazon.com/images/I/61-PNaQMq0L._AC_SX679_.jpg" alt="Lámpara Mesa Smart" loading="lazy">
+                <div class="discount-badge">15% OFF</div>
+                <h3>Lámpara de Mesa Smart Pro</h3>
+                <div class="price">RD$ 6,375 <span class="old-price">RD$ 7,500</span></div>
+                <p>16M colores, control táctil, carga inalámbrica</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="iluminacion">
+                <img src="http://nexxt-connectivity-frontend.s3.amazonaws.com/media/img/carrusel-NHB-S710_1.jpg" alt="Lámpara Piso Smart" loading="lazy">
+                <div class="discount-badge">10% OFF</div>
+                <h3>Lámpara de Piso Smart 3 en 1</h3>
+                <div class="price">RD$ 10,800 <span class="old-price">RD$ 12,000</span></div>
+                <p>3 cabezales, altavoz Bluetooth, USB integrado</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="iluminacion">
+                <img src="https://domoser.com.do/wp-content/uploads/2020/05/61snxZqdPJL._AC_SY450_.jpg" alt="Tira LED" loading="lazy">
+                <div class="discount-badge">12% OFF</div>
+                <h3>Tira LED Smart 5M</h3>
+                <div class="price">RD$ 2,640 <span class="old-price">RD$ 3,000</span></div>
+                <p>16M colores, música sincronizada, corte a medida</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="iluminacion">
+                <img src="https://www.gyptech.com.do/wp-content/uploads/bombilla-ren-e1648566312602.jpg" alt="Bombillas Smart" loading="lazy">
+                <div class="discount-badge">15% OFF</div>
+                <h3>Pack 4 Bombillas Smart E27</h3>
+                <div class="price">RD$ 4,200 <span class="old-price">RD$ 4,950</span></div>
+                <p>800 lúmenes, dimmable, control por voz</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="iluminacion">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_756733-MLA99469502684_112025-F.webp" alt="Lámpara Techo" loading="lazy">
+                <div class="discount-badge">15% OFF</div>
+                <h3>Lámpara de Techo Smart 40W</h3>
+                <div class="price">RD$ 7,140 <span class="old-price">RD$ 8,400</span></div>
+                <p>RGB + blanco, control remoto, 360° rotación</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="iluminacion">
+                <img src="https://images.bidcom.com.ar/resize?src=https://static.bidcom.com.ar/publicacionesML/productos/KDESKL02/1000x1000-KDESKL02.jpg&w=500&q=100" alt="Lámpara Escritorio" loading="lazy">
+                <div class="discount-badge">12% OFF</div>
+                <h3>Lámpara Escritorio LED Smart</h3>
+                <div class="price">RD$ 4,220 <span class="old-price">RD$ 4,800</span></div>
+                <p>Protección ocular, 5 modos brillo, USB carga</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+
+            <!-- === SENSORES === -->
+            <div class="promo-card reveal" data-category="sensores">
+                <img src="https://portatilshoprd.com/wp-content/uploads/2022/02/2B5DA38B-B8C7-438F-865A-45D9B079C2AA.jpeg" alt="Sensor Puerta" loading="lazy">
+                <div class="discount-badge">10% OFF</div>
+                <h3>Sensor Puerta/Ventana WiFi</h3>
+                <div class="price">RD$ 2,640 <span class="old-price">RD$ 2,940</span></div>
+                <p>Notificaciones instantáneas, batería 2 años</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="sensores">
+                <img src="https://m.media-amazon.com/images/I/51TRNcqQbrL._AC_SL500_.jpg" alt="Sensor Movimiento" loading="lazy">
+                <div class="discount-badge">15% OFF</div>
+                <h3>Sensor Movimiento PIR</h3>
+                <div class="price">RD$ 3,510 <span class="old-price">RD$ 4,140</span></div>
+                <p>Detección 10m, visión nocturna, alertas</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="sensores">
+                <img src="https://www.steren.com.do/media/catalog/product/cache/0236bbabe616ddcff749ccbc14f38bf2/image/22403f215/sensor-wi-fi-de-temperatura-y-humedad-con-pantalla-digital.jpg" alt="Sensor Humedad" loading="lazy">
+                <div class="discount-badge">10% OFF</div>
+                <h3>Sensor Humedad/Temp. Smart</h3>
+                <div class="price">RD$ 2,100 <span class="old-price">RD$ 2,340</span></div>
+                <p>Precisión ±0.3°C, alertas de moho</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="sensores">
+                <img src="https://i5.walmartimages.com/asr/f11a3ac8-08e9-4a64-9514-91457846e299.188de69080551af7b75317ead1d109cb.jpeg?odnHeight=717&odnWidth=717&odnBg=FFFFFF" alt="Sensor Humo" loading="lazy">
+                <div class="discount-badge">12% OFF</div>
+                <h3>Sensor Humo/CO2 Smart</h3>
+                <div class="price">RD$ 3,640 <span class="old-price">RD$ 4,140</span></div>
+                <p>Detección temprana, sirena 85dB</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="sensores">
+                <img src="https://www.tualarmasincuotas.es/media/wysiwyg/detectores/detector-de-inundacion.jpg" alt="Sensor Inundación" loading="lazy">
+                <div class="discount-badge">15% OFF</div>
+                <h3>Sensor Inundación Smart</h3>
+                <div class="price">RD$ 1,780 <span class="old-price">RD$ 2,100</span></div>
+                <p>Alerta fugas instantánea, IP67</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="sensores">
+                <img src="https://led-atomant.com/14660-large_default/sensor-de-luz-inteligente-para-interior-compatible-con-app-smart-life.jpg" alt="Sensor Luz" loading="lazy">
+                <div class="discount-badge">10% OFF</div>
+                <h3>Sensor Luz Ambiente Smart</h3>
+                <div class="price">RD$ 1,350 <span class="old-price">RD$ 1,500</span></div>
+                <p>Control luces auto, ahorro energía 30%</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <!-- === SEGURIDAD === -->
+            <div class="promo-card reveal" data-category="seguridad">
+                <img src="https://m.media-amazon.com/images/I/61qRnATTTJL._AC_SX425_.jpg" alt="Cámara Exterior" loading="lazy">
+                <div class="discount-badge">4K UHD</div>
+                <h3>Cámara Exterior SmartCam Pro</h3>
+                <div class="price">RD$ 1,590</div>
+                <p>Visión nocturna 30m, IA Personas</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="seguridad">
+                <img src="https://m.media-amazon.com/images/I/61BknC+ZDIL._AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Sensor Movimiento Wireless" loading="lazy">
+                <div class="discount-badge">3 Años Bat.</div>
+                <h3>Sensor Movimiento Wireless</h3>
+                <div class="price">RD$ 7,890</div>
+                <p>Alcance 12m, anti-falsas alarmas</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="seguridad">
+                <img src="https://image.made-in-china.com/155f0j00MoVWeyYhyBbw/Wireless-WiFi-Video-Doorbell-with-Chime-Doorbell-Monitor-Smart-Ring-Video-Doorbell-Camera.webp" alt="Video Timbre" loading="lazy">
+                <div class="discount-badge">Video HD</div>
+                <h3>Video Timbre SmartRing</h3>
+                <div class="price">RD$ 19,990</div>
+                <p>Audio bidireccional, nube incluída</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="seguridad">
+                <img src="https://m.media-amazon.com/images/I/61Kyds9IIBL._AC_SX522_.jpg" alt="Sirena Alarma" loading="lazy">
+                <div class="discount-badge">120dB</div>
+                <h3>Sirena de Alarma Pro</h3>
+                <div class="price">RD$ 9,990</div>
+                <p>Potencia sonora extrema, estrobo LED</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="seguridad">
+                <img src="https://static.wixstatic.com/media/2b3319_3ffddcd0054644ea9d5aebc66fca637f~mv2.jpeg/v1/fill/w_498,h_498,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/2b3319_3ffddcd0054644ea9d5aebc66fca637f~mv2.jpeg" alt="Detector Humo CO" loading="lazy">
+                <div class="discount-badge">10 Años Bat.</div>
+                <h3>Detector Humo y CO Pro</h3>
+                <div class="price">RD$ 4,990</div>
+                <p>Detección dual, alerta al celular</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="seguridad">
+                <img src="https://images.ctfassets.net/2xsswpd01u70/variant-52958218158418-en-eu/cd581a21d03787936df89cd65a386163/variant-52958218158418-en-eu.png" alt="Cámara Interior" loading="lazy">
+                <div class="discount-badge">360°</div>
+                <h3>Cámara Interior Pan/Tilt 2K</h3>
+                <div class="price">RD$ 3,590</div>
+                <p>Seguimiento auto, audio bidireccional</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <!-- === CLIMA === -->
+            <div class="promo-card reveal" data-category="clima">
+                <img src="https://m.media-amazon.com/images/I/5118X+rWiOL._AC_SX679_.jpg" alt="Termostato Smart" loading="lazy">
+                <div class="discount-badge">10% OFF</div>
+                <h3>Termostato Inteligente Eco</h3>
+                <div class="price">RD$ 8,500 <span class="old-price">RD$ 9,450</span></div>
+                <p>Ahorro energético 30%, control voz</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="clima">
+                <img src="https://m.media-amazon.com/images/I/51ZcRyapb2L._AC_SX679_.jpg" alt="Controlador AC" loading="lazy">
+                <div class="discount-badge">15% OFF</div>
+                <h3>Controlador de AC Smart</h3>
+                <div class="price">RD$ 4,200 <span class="old-price">RD$ 4,940</span></div>
+                <p>Convierte tu AC en Smart por WiFi</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="clima">
+                <img src="https://m.media-amazon.com/images/I/61T8pB3ZolL._AC_SX569_.jpg" alt="Purificador Aire" loading="lazy">
+                <div class="discount-badge">12% OFF</div>
+                <h3>Purificador de Aire Pro H13</h3>
+                <div class="price">RD$ 12,490 <span class="old-price">RD$ 14,190</span></div>
+                <p>Filtro HEPA, elimina 99.9% virus</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="promo-card reveal" data-category="clima">
+                <img src="https://i5.walmartimages.com/asr/ffe83e97-0159-4210-b2ed-3498b87c5b8c.43d5116186d11e14fdb107454e01de8b.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF" alt="Humidificador Smart" loading="lazy">
+                <div class="discount-badge">15% OFF</div>
+                <h3>Humidificador Ultrasónico 4L</h3>
+                <div class="price">RD$ 2,800 <span class="old-price">RD$ 3,290</span></div>
+                <p>Aromaterapia, luz LED, apagado auto</p>
+                <div class="button-group">
+                    <button class="btn btn-buy">🛍️ Comprar</button>
+                    <button class="btn-add-cart" title="Agregar al carrito"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Compra -->
+    <div id="buy-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Completar Pedido</h2>
+            <div style="margin: 20px 0; padding: 15px; background: #f8fafc; border-radius: 10px; text-align: center;">
+                <h3 id="modal-product-name">Producto</h3>
+                <p id="modal-product-price" style="font-size: 1.5rem; color: #ff6b6b; font-weight: 800;">RD$ 0</p>
+            </div>
+            <form id="purchase-form">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="buyer-name" required placeholder="Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono / WhatsApp</label>
+                    <input type="tel" id="buyer-phone" required placeholder="809-123-4567">
+                    <small id="phone-error" style="color: #ef4444; display: none;">Número inválido</small>
+                </div>
+                <div class="form-group">
+                    <label>Dirección de Envío</label>
+                    <textarea id="buyer-address" required placeholder="Calle 123, Santo Domingo"></textarea>
+                </div>
+                <button type="submit" class="btn btn-confirm">Confirmar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sidebar Carrito -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>🛒 Carrito</h3>
+            <button class="close-sidebar" id="close-sidebar"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items-container" id="cart-items-container">
+            <!-- Items here -->
+        </div>
+        <div class="sidebar-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="sidebar-total">RD$ 0</span>
+            </div>
+            <button class="btn-checkout" id="checkout-btn">Proceder al pago</button>
+        </div>
+    </div>
+
+    <div id="toast"><i class="fas fa-check-circle"></i> Producto añadido</div>
+
+    <!-- Floating Support Button -->
+    <button class="support-float" id="open-support" title="Servicio al Cliente">
+        <i class="fas fa-headset"></i>
+    </button>
+
+    <!-- Support Modal -->
+    <div class="support-modal" id="support-modal">
+        <div class="support-modal-content">
+            <span class="close-support" id="close-support">&times;</span>
+            <h2><i class="fas fa-headset"></i> Servicio al Cliente</h2>
+            <form id="support-form">
+                <div class="support-form-group">
+                    <label>Tu Nombre</label>
+                    <input type="text" name="name" id="support-name" required placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="support-form-group">
+                    <label>Asunto</label>
+                    <input type="text" name="subject" id="support-subject" required placeholder="Ej. Duda sobre mi pedido">
+                </div>
+                <div class="support-form-group">
+                    <label>Mensaje</label>
+                    <textarea name="message" id="support-message" required rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+                </div>
+                <button type="submit" class="btn-send-support" id="support-submit-btn">Enviar Mensaje</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/18293848902" class="whatsapp-float" target="_blank" title="Chatea con nosotros">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <p>&copy; 2026 Hogar Smart. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartBtn = document.getElementById('cart-btn');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const closeSidebarBtn = document.getElementById('close-sidebar');
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const cartCountBadge = document.getElementById('cart-count');
+            const sidebarTotal = document.getElementById('sidebar-total');
+            const modal = document.getElementById('buy-modal');
+            const closeModal = document.querySelector('.close-modal');
+            const purchaseForm = document.getElementById('purchase-form');
+
+            // Load cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('hogar_smart_cart')) || [];
+            updateUI(); // Initial UI update
+
+            function openSidebar() {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+
+            cartBtn.addEventListener('click', (e) => { e.preventDefault(); openSidebar(); });
+            closeSidebarBtn.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+
+            // Add to Cart
+            document.querySelectorAll('.btn-add-cart').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const card = btn.closest('.promo-card');
+                    const title = card.querySelector('h3').innerText;
+                    const price = card.querySelector('.price').innerText.split(' ')[1];
+                    cart.push({ title, price });
+                    saveCart();
+                    updateUI();
+                    showToast();
+                });
+            });
+
+            function saveCart() {
+                localStorage.setItem('hogar_smart_cart', JSON.stringify(cart));
+            }
+
+            // Buy Now
+            document.querySelectorAll('.btn-buy').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const card = btn.closest('.promo-card');
+                    document.getElementById('modal-product-name').innerText = card.querySelector('h3').innerText;
+                    document.getElementById('modal-product-price').innerText = card.querySelector('.price').innerText.split(' ')[1];
+                    modal.classList.add('active');
+                });
+            });
+
+            closeModal.addEventListener('click', () => modal.classList.remove('active'));
+
+            function updateUI() {
+                cartCountBadge.innerText = cart.length;
+                cartItemsContainer.innerHTML = cart.length === 0 ? '<p style="text-align:center; padding: 20px; color: #64748b;">Tu carrito está vacío</p>' : cart.map((item, i) => `
+                    <div class="cart-item">
+                        <div>
+                            <h4>${item.title}</h4>
+                            <p>RD$ ${item.price}</p>
+                        </div>
+                        <button onclick="removeItem(${i})" class="cart-item-remove"><i class="fas fa-trash"></i></button>
+                    </div>
+                `).join('');
+                let total = cart.reduce((acc, item) => acc + parseInt(item.price.replace(/,/g, '')), 0);
+                sidebarTotal.innerText = 'RD$ ' + total.toLocaleString();
+            }
+
+            window.removeItem = (i) => {
+                cart.splice(i, 1);
+                saveCart();
+                updateUI();
+            };
+
+            function showToast() {
+                const toast = document.getElementById("toast");
+                toast.className = "show";
+                setTimeout(() => { toast.className = ""; }, 3000);
+            }
+
+            // Mobile Menu
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            mobileMenu.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Reveal
+            function reveal() {
+                document.querySelectorAll(".reveal").forEach(el => {
+                    if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
+                });
+            }
+            window.addEventListener("scroll", reveal);
+            reveal();
+
+            // WhatsApp
+            purchaseForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const phone = document.getElementById('buyer-phone').value;
+                if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(phone)) {
+                    document.getElementById('phone-error').style.display = 'block';
+                    return;
+                }
+                const name = document.getElementById('buyer-name').value;
+                const addr = document.getElementById('buyer-address').value;
+                const prod = document.getElementById('modal-product-name').innerText;
+                const msg = `Hola Hogar Smart! 💡\nPedido: ${prod}\nNombre: ${name}\nTel: ${phone}\nDir: ${addr}`;
+                window.open(`https://wa.me/18293848902?text=${encodeURIComponent(msg)}`, '_blank');
+            });
+
+            // Filtering Logic
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const productCards = document.querySelectorAll('.promo-card');
+            const searchInput = document.getElementById('product-search');
+
+            function filterProducts() {
+                const filterValue = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                const searchValue = searchInput.value.toLowerCase();
+
+                productCards.forEach(card => {
+                    const title = card.querySelector('h3').innerText.toLowerCase();
+                    const category = card.getAttribute('data-category');
+                    
+                    const matchesCategory = filterValue === 'all' || category === filterValue;
+                    const matchesSearch = title.includes(searchValue);
+
+                    if (matchesCategory && matchesSearch) {
+                        card.classList.remove('hidden');
+                        setTimeout(() => card.classList.add('active'), 50);
+                    } else {
+                        card.classList.add('hidden');
+                        card.classList.remove('active');
+                    }
+                });
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterProducts();
+                });
+            });
+
+            searchInput.addEventListener('input', filterProducts);
+
+            // Support Modal Logic
+            const openSupport = document.getElementById('open-support');
+            const closeSupport = document.getElementById('close-support');
+            const supportModal = document.getElementById('support-modal');
+            const supportForm = document.getElementById('support-form');
+
+            openSupport.addEventListener('click', () => supportModal.classList.add('active'));
+            closeSupport.addEventListener('click', () => supportModal.classList.remove('active'));
+            window.addEventListener('click', (e) => {
+                if (e.target === supportModal) supportModal.classList.remove('active');
+            });
+
+            supportForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('support-submit-btn');
+                const originalText = btn.innerText;
+                btn.innerText = "Enviando...";
+                btn.disabled = true;
+                const formData = new FormData(supportForm);
+                try {
+                    const response = await fetch('https://formsubmit.co/ajax/parradiogenni@gmail.com', {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (response.ok) {
+                        alert('¡Mensaje enviado con éxito! Recuerda revisar tu correo (parradiogenni@gmail.com) para confirmar la activación de Formspree la primera vez.');
+                        supportForm.reset();
+                        supportModal.classList.remove('active');
+                    } else {
+                        alert('Hubo un problema al enviar el mensaje. Por favor intenta de nuevo.');
+                    }
+                } catch (error) {
+                    alert('Error de conexión. Inténtalo más tarde.');
+                } finally {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
