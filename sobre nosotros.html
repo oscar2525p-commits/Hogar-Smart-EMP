@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - Hogar Smart</title>
+
+    <!-- Meta Tags / SEO -->
+    <meta name="description" content="Conoce Hogar Smart, líderes en domótica en República Dominicana. Nuestra misión es hacer tu vida más cómoda y segura.">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sobre Nosotros - Hogar Smart">
+    <meta property="og:description" content="Nuestra historia, misión y visión como expertos en tecnología para el hogar.">
+    <meta property="og:image" content="https://i.imgur.com/Ox8Vqqb.jpeg">
+
+    <link rel="icon" type="image/png" href="https://i.imgur.com/Ox8Vqqb.jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #128c7e;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Support Float Button */
+        .support-float {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 110px;
+            right: 45px;
+            background-color: #667eea;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .support-float:hover {
+            transform: scale(1.1);
+            background-color: #764ba2;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Support Modal */
+        .support-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+            backdrop-filter: blur(5px);
+        }
+
+        .support-modal.active {
+            display: flex;
+        }
+
+        .support-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            animation: modalSlide 0.4s ease;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .support-modal h2 {
+            margin-bottom: 20px;
+            color: #2d3748;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .support-form-group {
+            margin-bottom: 15px;
+        }
+
+        .support-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .support-form-group input, 
+        .support-form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #edf2f7;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .btn-send-support {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-send-support:hover {
+            background: #764ba2;
+        }
+
+        .close-support {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #a0aec0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.2rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            color: white;
+            transition: color 0.3s;
+            letter-spacing: -0.5px;
+        }
+
+        header.scrolled .logo {
+            color: #2d3748;
+        }
+
+        .logo i {
+            margin-right: 12px;
+            font-size: 1.8rem;
+            color: white;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        header.scrolled .logo i {
+            color: #667eea;
+            filter: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        header.scrolled .nav-links a {
+            color: #4a5568;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: #ff6b6b;
+        }
+
+        header.scrolled .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: #ff6b6b;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Nav Toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        header.scrolled .nav-toggle span {
+            background: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s ease;
+                z-index: 1000;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23667eea" width="1200" height="600"/><path fill="%23f8fafc" opacity="0.1" d="M0 300 Q300 100 600 300 T1200 300 V600 H0 Z"/><circle fill="%23ff6b6b" opacity="0.2" cx="300" cy="200" r="80"/><circle fill="%234fd1c7" opacity="0.2" cx="900" cy="250" r="60"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 70px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2d3748;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Our Story */
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .story-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #667eea;
+        }
+
+        .story-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+        }
+
+        .timeline {
+            position: relative;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 2.5rem;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+        }
+
+        .timeline-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .timeline-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .timeline-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .timeline-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .timeline-year {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mission Section */
+        .mission {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .mission-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .mission-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mission-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .team-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .team-member h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .team-role {
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        /* Stats */
+        .stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA */
+        .cta {
+            background: #ffffff;
+            text-align: center;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e293b;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #94a3b8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            color: #64748b;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .timeline-item::before {
+                left: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                Hogar Smart
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="Inicio.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="sobre nosotros.html">Sobre Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero reveal">
+        <div class="hero-content">
+            <h1>Sobre Hogar Smart</h1>
+            <p>Somos pioneros en tecnología para el hogar. Desde 2025, conectamos millones de hogares con soluciones
+                inteligentes que transforman la vida cotidiana.</p>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="section reveal">
+        <div class="container">
+            <h2 class="section-title">Nuestra Historia</h2>
+            <div class="story-grid">
+                <div class="story-text">
+                    <h3>De una idea a la revolución del hogar inteligente</h3>
+                    <p>Todo comenzó en 2025 cuando un grupo de estudiantes apasionados por la domótica soñaron con hacer
+                        la tecnología accesible para todos. Hoy, Hogar Smart es líder en Latinoamérica con más de 10,000
+                        hogares conectados.</p>
+                    <p>Nuestra misión es simple: hacer que cada hogar sea más seguro, eficiente y cómodo mediante
+                        innovación constante y un servicio excepcional.</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <i class="fas fa-rocket timeline-icon"></i>
+                        <div class="timeline-year">Misión</div>
+                        <p>Ofrecer soluciones tecnológicas innovadoras y seguras para transformar cada casa en un hogar inteligente.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <i class="fas fa-eye timeline-icon"></i>
+                        <div class="timeline-year">Visión</div>
+                        <p>Convertirnos en la empresa líder y referente en domótica, reconocida por nuestra calidad y servicio excepcional.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <i class="fas fa-gem timeline-icon"></i>
+                        <div class="timeline-year">Valores</div>
+                        <p><strong>Innovación:</strong> Siempre a la vanguardia.<br>
+                        <strong>Calidad:</strong> Excelencia en cada producto.<br>
+                        <strong>Responsabilidad:</strong> Compromiso con el cliente.<br>
+                        <strong>Servicio:</strong> Atención personalizada 24/7.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="section mission">
+        <div class="container">
+            <h2 class="section-title">Nuestra Filosofía</h2>
+            <p class="section-subtitle">Tres pilares que guían cada decisión que tomamos</p>
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Personas Primero</h3>
+                    <p>Diseñamos para mejorar la vida real de las familias, no solo para impresionar con tecnología.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Innovación Constante</h3>
+                    <p>Actualizaciones mensuales y desarrollo propio para estar siempre a la vanguardia.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Nuestro equipo está disponible las 24 horas para garantizar tu tranquilidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Nuestro Equipo</h2>
+            <p class="section-subtitle">Expertos apasionados por la tecnología del hogar</p>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h4>Oscar Peralta</h4>
+                    <div class="team-role">CEO</div>
+                    <p>Estudiado en domótica</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>Angel Martes</h4>
+                    <div class="team-role">CTO</div>
+                    <p>Arquitecto de sistemas</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h4>Diogenny Parra</h4>
+                    <div class="team-role">Head de Producto</div>
+                    <p>Diseño UX/UI</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-photo">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h4>Yendry Lantigua</h4>
+                    <div class="team-role">Soporte Técnico</div>
+                    <p>+5 años experiencia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-number">10K+</div>
+                    <div>Hogares conectados</div>
+                </div>
+                <div>
+                    <div class="stat-number">50+</div>
+                    <div>Empleados expertos</div>
+                </div>
+                <div>
+                    <div class="stat-number">5</div>
+                    <div>Países de cobertura</div>
+                </div>
+                <div>
+                    <div class="stat-number">99.9%</div>
+                    <div>Satisfacción cliente</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta">
+        <div class="container">
+            <h2>Únete a la revolución del hogar inteligente</h2>
+            <p>Conoce cómo podemos transformar tu hogar con nuestra tecnología probada.</p>
+            <a href="productos.html" class="btn"
+                style="background: #ff6b6b; color: white; padding: 18px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.2rem; display: inline-block; margin-top: 2rem;">Ver
+                Nuestros Productos</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- Floating Support Button -->
+    <button class="support-float" id="open-support" title="Servicio al Cliente">
+        <i class="fas fa-headset"></i>
+    </button>
+
+    <!-- Support Modal -->
+    <div class="support-modal" id="support-modal">
+        <div class="support-modal-content">
+            <span class="close-support" id="close-support">&times;</span>
+            <h2><i class="fas fa-headset"></i> Servicio al Cliente</h2>
+            <form id="support-form">
+                <div class="support-form-group">
+                    <label>Tu Nombre</label>
+                    <input type="text" name="name" id="support-name" required placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="support-form-group">
+                    <label>Asunto</label>
+                    <input type="text" name="subject" id="support-subject" required placeholder="Ej. Duda sobre mi pedido">
+                </div>
+                <div class="support-form-group">
+                    <label>Mensaje</label>
+                    <textarea name="message" id="support-message" required rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+                </div>
+                <button type="submit" class="btn-send-support" id="support-submit-btn">Enviar Mensaje</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/18293848902" class="whatsapp-float" target="_blank" title="Chatea con nosotros">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Hogar Smart</h3>
+                <p>Tecnología inteligente para tu hogar. Conectividad, seguridad y confort en un solo lugar.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces</h3>
+                <a href="Inicio.html">Inicio</a>
+                <a href="productos.html">Productos</a>
+                <a href="#">Soporte</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <a href="tel:+18293848902">+1 (829) 384-8902</a>
+                <a href="mailto:parradiogenni@gmail.com">parradiogenni@gmail.com</a>
+                <a href="https://www.instagram.com/hogar_smart_rd?igsh=a3ExZ3QxbnNubThl&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#">Santo Domingo, Rep. Dom.</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Hogar Smart. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Logic
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Reveal Animations Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // Cart Sync
+        function syncCart() {
+            const cartCountBadge = document.getElementById('cart-count');
+            if (cartCountBadge) {
+                const cart = JSON.parse(localStorage.getItem('hogar_smart_cart')) || [];
+                cartCountBadge.innerText = cart.length;
+            }
+        }
+        syncCart();
+        window.addEventListener('storage', syncCart);
+
+        // Support Modal Logic
+        const openSupport = document.getElementById('open-support');
+        const closeSupport = document.getElementById('close-support');
+        const supportModal = document.getElementById('support-modal');
+        const supportForm = document.getElementById('support-form');
+
+        openSupport.addEventListener('click', () => supportModal.classList.add('active'));
+        closeSupport.addEventListener('click', () => supportModal.classList.remove('active'));
+        window.addEventListener('click', (e) => {
+            if (e.target === supportModal) supportModal.classList.remove('active');
+        });
+
+        supportForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('support-submit-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "Enviando...";
+            btn.disabled = true;
+            const formData = new FormData(supportForm);
+            try {
+                const response = await fetch('https://formsubmit.co/ajax/parradiogenni@gmail.com', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    alert('¡Mensaje enviado con éxito! Recuerda revisar tu correo (parradiogenni@gmail.com) para confirmar la activación de Formspree la primera vez.');
+                    supportForm.reset();
+                    supportModal.classList.remove('active');
+                } else {
+                    alert('Hubo un problema al enviar el mensaje. Por favor intenta de nuevo.');
+                }
+            } catch (error) {
+                alert('Error de conexión. Inténtalo más tarde.');
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
